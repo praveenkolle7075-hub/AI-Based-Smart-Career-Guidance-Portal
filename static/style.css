@@ -1,0 +1,677 @@
+/* =====================================================
+   GLOBAL
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #f8fafc;
+    background:
+        radial-gradient(
+            circle at 20% 10%,
+            rgba(99, 102, 241, 0.18),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 20%,
+            rgba(0, 229, 255, 0.12),
+            transparent 30%
+        ),
+        #050816;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   TEXT
+===================================================== */
+
+.text-muted {
+    color: #94a3b8 !important;
+}
+
+.text-info {
+    color: #00e5ff !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    color: #f8fafc;
+}
+
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    padding: 18px 0;
+
+    background: rgba(5, 8, 22, 0.75);
+
+    backdrop-filter: blur(20px);
+
+    border-bottom:
+        1px solid rgba(255, 255, 255, 0.08);
+}
+
+.navbar-brand {
+    color: white !important;
+
+    font-size: 1.5rem;
+
+    font-weight: 800;
+}
+
+.navbar-brand i {
+    color: #00e5ff;
+}
+
+.nav-link {
+    color: #cbd5e1 !important;
+
+    margin-left: 15px;
+
+    transition: 0.3s;
+}
+
+.nav-link:hover {
+    color: #00e5ff !important;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.btn-primary {
+    border: none;
+
+    background:
+        linear-gradient(
+            135deg,
+            #6366f1,
+            #00e5ff
+        );
+
+    color: white;
+
+    font-weight: 700;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 0 25px rgba(99, 102, 241, 0.25);
+
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 0 35px rgba(0, 229, 255, 0.4);
+
+    color: white;
+}
+
+.btn-outline-light {
+    border-color: rgba(255,255,255,0.2);
+
+    color: #e2e8f0;
+
+    border-radius: 12px;
+}
+
+.btn-outline-light:hover {
+    background: rgba(255,255,255,0.08);
+
+    border-color: #00e5ff;
+
+    color: #00e5ff;
+}
+
+
+/* =====================================================
+   BADGE
+===================================================== */
+
+.badge {
+    padding: 10px 16px;
+
+    border-radius: 50px;
+
+    color: #00e5ff;
+
+    background:
+        rgba(0, 229, 255, 0.08);
+
+    border:
+        1px solid rgba(0, 229, 255, 0.2);
+
+    font-weight: 600;
+
+    letter-spacing: 0.5px;
+}
+
+
+/* =====================================================
+   GRADIENT TEXT
+===================================================== */
+
+.hero-gradient {
+    background:
+        linear-gradient(
+            90deg,
+            #00e5ff,
+            #6366f1,
+            #a855f7
+        );
+
+    -webkit-background-clip: text;
+
+    -webkit-text-fill-color: transparent;
+
+    background-clip: text;
+}
+
+
+/* =====================================================
+   CARDS
+===================================================== */
+
+.career-card {
+    position: relative;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,0.07),
+            rgba(255,255,255,0.025)
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.09);
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.25);
+
+    transition:
+        transform 0.35s ease,
+        border 0.35s ease,
+        box-shadow 0.35s ease;
+
+    overflow: hidden;
+}
+
+.career-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    background: rgba(0,229,255,0.08);
+
+    border-radius: 50%;
+
+    filter: blur(40px);
+
+    top: -70px;
+    right: -70px;
+
+    pointer-events: none;
+}
+
+.career-card:hover {
+    transform: translateY(-7px);
+
+    border-color:
+        rgba(0,229,255,0.3);
+
+    box-shadow:
+        0 20px 70px rgba(0,229,255,0.1);
+}
+
+
+/* =====================================================
+   FEATURE ICON
+===================================================== */
+
+.feature-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 16px;
+
+    color: #00e5ff;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0,229,255,0.12),
+            rgba(99,102,241,0.16)
+        );
+
+    border:
+        1px solid rgba(0,229,255,0.18);
+
+    font-size: 1.5rem;
+}
+
+
+/* =====================================================
+   SKILL TITLE
+===================================================== */
+
+.skill-title {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+}
+
+.skill-title small {
+    color: #94a3b8;
+}
+
+
+/* =====================================================
+   FORM
+===================================================== */
+
+.form-label {
+    color: #cbd5e1;
+
+    font-weight: 600;
+}
+
+.form-control {
+    background:
+        rgba(255,255,255,0.05);
+
+    border:
+        1px solid rgba(255,255,255,0.12);
+
+    color: white;
+
+    border-radius: 12px;
+
+    padding: 13px 15px;
+}
+
+.form-control:focus {
+    background:
+        rgba(255,255,255,0.07);
+
+    color: white;
+
+    border-color: #00e5ff;
+
+    box-shadow:
+        0 0 0 0.2rem rgba(0,229,255,0.1);
+}
+
+.form-control::placeholder {
+    color: #64748b;
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+.progress {
+    height: 9px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+.progress-bar {
+    background:
+        linear-gradient(
+            90deg,
+            #00e5ff,
+            #6366f1,
+            #a855f7
+        );
+
+    border-radius: 20px;
+}
+
+
+/* =====================================================
+   SCORE CIRCLE
+===================================================== */
+
+.score-circle {
+    width: 210px;
+    height: 210px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background:
+        conic-gradient(
+            #00e5ff 0deg,
+            #6366f1 220deg,
+            rgba(255,255,255,0.08) 220deg
+        );
+
+    position: relative;
+}
+
+.score-circle::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 12px;
+
+    border-radius: 50%;
+
+    background: #080b1c;
+}
+
+.score-circle > div {
+    position: relative;
+
+    z-index: 2;
+
+    text-align: center;
+}
+
+.score-circle strong {
+    display: block;
+
+    font-size: 2.7rem;
+
+    color: white;
+}
+
+.score-circle small {
+    color: #94a3b8;
+}
+
+
+/* =====================================================
+   SKILL BARS
+===================================================== */
+
+.skill-bar {
+    margin-top: 22px;
+}
+
+.skill-bar .progress {
+    margin-top: 8px;
+}
+
+
+/* =====================================================
+   RECOMMENDATIONS
+===================================================== */
+
+.recommendation-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    margin-top: 12px;
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,0.04);
+
+    border:
+        1px solid rgba(255,255,255,0.07);
+}
+
+.recommendation-item i {
+    color: #22c55e;
+}
+
+.recommendation-item span {
+    color: #00e5ff;
+    font-weight: 700;
+}
+
+
+/* =====================================================
+   ROADMAP
+===================================================== */
+
+.roadmap-step {
+    display: flex;
+
+    gap: 18px;
+
+    position: relative;
+
+    padding: 20px 0;
+}
+
+.roadmap-step:not(:last-child)::after {
+    content: "";
+
+    position: absolute;
+
+    left: 23px;
+
+    top: 65px;
+
+    width: 2px;
+
+    height: calc(100% - 40px);
+
+    background:
+        linear-gradient(
+            #00e5ff,
+            rgba(99,102,241,0.1)
+        );
+}
+
+.roadmap-number {
+    min-width: 48px;
+
+    height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #00e5ff,
+            #6366f1
+        );
+
+    color: white;
+
+    font-weight: 800;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+
+/* =====================================================
+   GLOW
+===================================================== */
+
+.glow {
+    position: fixed;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    filter: blur(100px);
+
+    pointer-events: none;
+
+    opacity: 0.25;
+
+    z-index: -1;
+}
+
+.glow.one {
+    top: 10%;
+
+    left: -100px;
+
+    background: #6366f1;
+}
+
+.glow.two {
+    right: -100px;
+
+    bottom: 10%;
+
+    background: #00e5ff;
+}
+
+
+/* =====================================================
+   ANIMATION
+===================================================== */
+
+.reveal {
+    animation:
+        reveal 0.8s ease forwards;
+}
+
+@keyframes reveal {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+
+}
+
+
+/* =====================================================
+   PULSE
+===================================================== */
+
+.ai-pulse {
+    animation:
+        pulse 2.5s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 0 0 rgba(0,229,255,0);
+    }
+
+    50% {
+        box-shadow:
+            0 0 35px rgba(0,229,255,0.25);
+    }
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    color: #94a3b8;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:768px) {
+
+    .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .display-5 {
+        font-size: 2rem;
+    }
+
+    .score-circle {
+        width: 170px;
+        height: 170px;
+    }
+
+    .score-circle strong {
+        font-size: 2.2rem;
+    }
+
+    .navbar {
+        padding: 12px 0;
+    }
+
+}

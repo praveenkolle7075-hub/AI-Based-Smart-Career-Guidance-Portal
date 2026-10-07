@@ -1,0 +1,2756 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AI-Based Smart Career Guidance Portal | Assessment</title>
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Project CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            color: #f8fafc;
+
+            background:
+
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0,229,255,0.12),
+                    transparent 28%
+                ),
+
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(124,58,237,0.16),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 50% 100%,
+                    rgba(37,99,235,0.10),
+                    transparent 35%
+                ),
+
+                #050914;
+
+            overflow-x: hidden;
+
+        }
+
+
+        /* =====================================================
+           BACKGROUND EFFECTS
+        ===================================================== */
+
+        .background-grid {
+
+            position: fixed;
+
+            inset: 0;
+
+            pointer-events: none;
+
+            opacity: 0.18;
+
+            background-image:
+
+                linear-gradient(
+                    rgba(255,255,255,0.04) 1px,
+                    transparent 1px
+                ),
+
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,0.04) 1px,
+                    transparent 1px
+                );
+
+            background-size: 55px 55px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 90%
+                );
+
+        }
+
+
+        .glow-orb {
+
+            position: fixed;
+
+            width: 350px;
+
+            height: 350px;
+
+            border-radius: 50%;
+
+            filter: blur(100px);
+
+            opacity: 0.15;
+
+            pointer-events: none;
+
+            z-index: -1;
+
+        }
+
+        .orb-one {
+
+            background: #00e5ff;
+
+            top: 15%;
+
+            left: -180px;
+
+            animation: floatOrb 8s ease-in-out infinite;
+
+        }
+
+        .orb-two {
+
+            background: #7c3aed;
+
+            top: 45%;
+
+            right: -180px;
+
+            animation: floatOrb 10s ease-in-out infinite reverse;
+
+        }
+
+
+        @keyframes floatOrb {
+
+            0%,100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-40px);
+            }
+
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .assessment-navbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(5,9,20,0.82);
+
+            backdrop-filter:
+                blur(20px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .brand {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -0.5px;
+
+        }
+
+
+        .brand-icon {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            width: 36px;
+
+            height: 36px;
+
+            margin-right: 9px;
+
+            border-radius: 11px;
+
+            color: #00e5ff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,229,255,0.16),
+                    rgba(124,58,237,0.20)
+                );
+
+            border:
+                1px solid rgba(0,229,255,0.18);
+
+        }
+
+
+        .nav-link-custom {
+
+            color: #9aa7bc;
+
+            text-decoration: none;
+
+            margin-left: 28px;
+
+            font-size: 14px;
+
+            transition: 0.3s;
+
+        }
+
+
+        .nav-link-custom:hover {
+
+            color: #00e5ff;
+
+        }
+
+
+        .nav-assessment {
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            padding:
+                9px 16px;
+
+            border-radius: 10px;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-left: 25px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(37,99,235,0.22);
+
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .assessment-header {
+
+            text-align: center;
+
+            padding:
+                75px 20px 35px;
+
+        }
+
+
+        .ai-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                9px 18px;
+
+            border-radius: 50px;
+
+            color: #00e5ff;
+
+            background:
+                rgba(0,229,255,0.06);
+
+            border:
+                1px solid rgba(0,229,255,0.18);
+
+            font-size: 11px;
+
+            font-weight: 800;
+
+            letter-spacing: 1.6px;
+
+            box-shadow:
+                0 0 25px
+                rgba(0,229,255,0.08);
+
+        }
+
+
+        .main-title {
+
+            margin-top: 25px;
+
+            font-size:
+                clamp(38px, 5vw, 66px);
+
+            line-height: 1.05;
+
+            font-weight: 800;
+
+            letter-spacing: -2.8px;
+
+        }
+
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #00e5ff,
+                    #8b5cf6
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+        }
+
+
+        .header-description {
+
+            max-width: 760px;
+
+            margin:
+                20px auto 0;
+
+            color: #8d9ab0;
+
+            line-height: 1.8;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =====================================================
+           HEADER STATS
+        ===================================================== */
+
+        .header-stats {
+
+            max-width: 700px;
+
+            margin:
+                35px auto 0;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+        }
+
+
+        .header-stat {
+
+            padding: 15px;
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border-radius: 14px;
+
+        }
+
+
+        .header-stat strong {
+
+            display: block;
+
+            color: #ffffff;
+
+            font-size: 20px;
+
+        }
+
+
+        .header-stat span {
+
+            color: #718096;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           PROGRESS
+        ===================================================== */
+
+        .progress-wrapper {
+
+            max-width: 850px;
+
+            margin:
+                35px auto 0;
+
+        }
+
+
+        .progress-info {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            color: #8290a5;
+
+            font-size: 12px;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .progress {
+
+            height: 7px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+        }
+
+
+        .progress-bar {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00e5ff,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            border-radius: 20px;
+
+            transition:
+                width .4s ease;
+
+            box-shadow:
+                0 0 15px
+                rgba(0,229,255,0.3);
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .assessment-container {
+
+            max-width: 1180px;
+
+            margin:
+                25px auto 90px;
+
+        }
+
+
+        /* =====================================================
+           MAIN ASSESSMENT CARD
+        ===================================================== */
+
+        .assessment-card {
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.065),
+                    rgba(255,255,255,0.025)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+            border-radius: 28px;
+
+            padding: 32px;
+
+            backdrop-filter:
+                blur(20px);
+
+            box-shadow:
+                0 35px 100px
+                rgba(0,0,0,0.35);
+
+        }
+
+
+        /* =====================================================
+           SECTION HEADER
+        ===================================================== */
+
+        .section-heading {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .section-heading h3 {
+
+            font-size: 21px;
+
+            font-weight: 800;
+
+            margin: 0;
+
+        }
+
+
+        .section-heading p {
+
+            color: #718096;
+
+            font-size: 12px;
+
+            margin: 5px 0 0;
+
+        }
+
+
+        .reset-button {
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+            color: #9aa7bc;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border-radius: 10px;
+
+            padding:
+                8px 13px;
+
+            font-size: 12px;
+
+            transition: .3s;
+
+        }
+
+
+        .reset-button:hover {
+
+            color: #ff7b7b;
+
+            border-color:
+                rgba(255,100,100,0.3);
+
+        }
+
+
+        /* =====================================================
+           SKILL CARD
+        ===================================================== */
+
+        .skill-card {
+
+            position: relative;
+
+            height: 100%;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.045),
+                    rgba(255,255,255,0.018)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.075);
+
+            transition:
+                transform .3s ease,
+                border-color .3s ease,
+                box-shadow .3s ease;
+
+            overflow: hidden;
+
+        }
+
+
+        .skill-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 100px;
+
+            height: 100px;
+
+            top: -50px;
+
+            right: -50px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(0,229,255,0.08);
+
+            filter: blur(20px);
+
+        }
+
+
+        .skill-card:hover {
+
+            transform:
+                translateY(-6px);
+
+            border-color:
+                rgba(0,229,255,0.25);
+
+            box-shadow:
+                0 20px 45px
+                rgba(0,0,0,0.25),
+
+                0 0 30px
+                rgba(0,229,255,0.05);
+
+        }
+
+
+        .skill-icon {
+
+            width: 52px;
+
+            height: 52px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,229,255,0.12),
+                    rgba(124,58,237,0.13)
+                );
+
+            border:
+                1px solid rgba(0,229,255,0.16);
+
+            color: #00e5ff;
+
+            font-size: 21px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .skill-title {
+
+            font-size: 19px;
+
+            font-weight: 800;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .skill-description {
+
+            color: #7f8da3;
+
+            font-size: 12px;
+
+            line-height: 1.65;
+
+            min-height: 40px;
+
+        }
+
+
+        /* =====================================================
+           SCORE
+        ===================================================== */
+
+        .score-display {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-top: 21px;
+
+        }
+
+
+        .score-label {
+
+            color: #718096;
+
+            font-size: 11px;
+
+            text-transform: uppercase;
+
+            letter-spacing: .7px;
+
+        }
+
+
+        .score-number {
+
+            font-size: 25px;
+
+            font-weight: 800;
+
+            color: #00e5ff;
+
+        }
+
+
+        .level-badge {
+
+            display: inline-block;
+
+            margin-top: 8px;
+
+            padding: 4px 9px;
+
+            border-radius: 20px;
+
+            color: #9aa7bc;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* =====================================================
+           SLIDER
+        ===================================================== */
+
+        .skill-range {
+
+            width: 100%;
+
+            height: 7px;
+
+            appearance: none;
+
+            border-radius: 20px;
+
+            outline: none;
+
+            margin-top: 18px;
+
+            cursor: pointer;
+
+        }
+
+
+        .skill-range::-webkit-slider-thumb {
+
+            appearance: none;
+
+            width: 21px;
+
+            height: 21px;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+
+            border:
+                3px solid #00e5ff;
+
+            box-shadow:
+                0 0 18px
+                rgba(0,229,255,0.55);
+
+            cursor: pointer;
+
+        }
+
+
+        .skill-range::-moz-range-thumb {
+
+            width: 21px;
+
+            height: 21px;
+
+            border-radius: 50%;
+
+            background: #ffffff;
+
+            border:
+                3px solid #00e5ff;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           LIVE PROFILE PANEL
+        ===================================================== */
+
+        .profile-panel {
+
+            margin-top: 25px;
+
+            padding: 25px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,229,255,0.055),
+                    rgba(124,58,237,0.07)
+                );
+
+            border:
+                1px solid rgba(0,229,255,0.12);
+
+        }
+
+
+        .profile-title {
+
+            font-size: 17px;
+
+            font-weight: 800;
+
+        }
+
+
+        .profile-subtitle {
+
+            color: #718096;
+
+            font-size: 12px;
+
+        }
+
+
+        .profile-stat {
+
+            padding: 18px;
+
+            border-radius: 15px;
+
+            background:
+                rgba(0,0,0,0.15);
+
+            border:
+                1px solid rgba(255,255,255,0.05);
+
+        }
+
+
+        .profile-stat .value {
+
+            font-size: 27px;
+
+            font-weight: 800;
+
+            color: #00e5ff;
+
+        }
+
+
+        .profile-stat .label {
+
+            color: #718096;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           RADAR CHART
+        ===================================================== */
+
+        .chart-box {
+
+            height: 330px;
+
+            position: relative;
+
+        }
+
+
+        /* =====================================================
+           AI INSIGHT
+        ===================================================== */
+
+        .ai-info {
+
+            margin-top: 25px;
+
+            padding: 22px;
+
+            border-radius: 17px;
+
+            background:
+                rgba(0,229,255,0.035);
+
+            border:
+                1px solid rgba(0,229,255,0.12);
+
+        }
+
+
+        .ai-info-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            color: #00e5ff;
+
+            background:
+                rgba(0,229,255,0.08);
+
+            font-size: 21px;
+
+        }
+
+
+        .ai-info-title {
+
+            font-weight: 800;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .ai-info-text {
+
+            color: #7f8da3;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =====================================================
+           HOW IT WORKS
+        ===================================================== */
+
+        .feature-strip {
+
+            margin-top: 25px;
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 12px;
+
+        }
+
+
+        .feature-mini {
+
+            padding: 18px;
+
+            border-radius: 15px;
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+            background:
+                rgba(255,255,255,0.025);
+
+        }
+
+
+        .feature-mini i {
+
+            color: #00e5ff;
+
+            font-size: 20px;
+
+        }
+
+
+        .feature-mini h6 {
+
+            margin-top: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        .feature-mini p {
+
+            color: #718096;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+            margin: 0;
+
+        }
+
+
+        /* =====================================================
+           SUBMIT
+        ===================================================== */
+
+        .submit-section {
+
+            text-align: center;
+
+            margin-top: 35px;
+
+            padding-top: 30px;
+
+            border-top:
+                1px solid rgba(255,255,255,0.07);
+
+        }
+
+
+        .analyze-button {
+
+            border: none;
+
+            padding:
+                15px 32px;
+
+            border-radius: 13px;
+
+            color: white;
+
+            font-weight: 800;
+
+            font-size: 15px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 15px 40px
+                rgba(37,99,235,0.25);
+
+            transition: .3s;
+
+        }
+
+
+        .analyze-button:hover {
+
+            transform:
+                translateY(-3px);
+
+            box-shadow:
+                0 20px 55px
+                rgba(37,99,235,0.40);
+
+        }
+
+
+        .security-text {
+
+            margin-top: 14px;
+
+            color: #596579;
+
+            font-size: 11px;
+
+        }
+
+
+        /* =====================================================
+           ANIMATION
+        ===================================================== */
+
+        .fade-up {
+
+            animation:
+                fadeUp .8s ease both;
+
+        }
+
+
+        @keyframes fadeUp {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(20px);
+
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 768px) {
+
+            .assessment-header {
+
+                padding-top: 50px;
+
+            }
+
+            .main-title {
+
+                font-size: 40px;
+
+            }
+
+            .assessment-card {
+
+                padding: 18px;
+
+                border-radius: 20px;
+
+            }
+
+            .nav-link-custom {
+
+                display: none;
+
+            }
+
+            .header-stats {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .feature-strip {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+            .chart-box {
+
+                height: 270px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- Background -->
+
+<div class="background-grid"></div>
+
+<div class="glow-orb orb-one"></div>
+
+<div class="glow-orb orb-two"></div>
+
+
+
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
+
+<nav class="assessment-navbar">
+
+    <div class="container">
+
+        <div
+            class="d-flex
+                   justify-content-between
+                   align-items-center
+                   py-3">
+
+            <a
+                href="/"
+                class="brand">
+
+                <span class="brand-icon">
+
+                    <i class="bi bi-stars"></i>
+
+                </span>
+
+                AI Career Guidance
+
+            </a>
+
+
+            <div class="d-flex align-items-center">
+
+                <a
+                    href="/"
+                    class="nav-link-custom">
+
+                    Home
+
+                </a>
+
+
+                <a
+                    href="/careers"
+                    class="nav-link-custom">
+
+                    Careers
+
+                </a>
+
+
+                <a
+                    href="/roadmap"
+                    class="nav-link-custom">
+
+                    Roadmap
+
+                </a>
+
+
+                <a
+                    href="/assessment"
+                    class="nav-assessment">
+
+                    <i class="bi bi-cpu me-1"></i>
+
+                    Assessment
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="assessment-header fade-up">
+
+    <div class="ai-label">
+
+        <i class="bi bi-stars"></i>
+
+        AI-POWERED CAREER ASSESSMENT
+
+    </div>
+
+
+    <h1 class="main-title">
+
+        Discover Your
+
+        <span class="gradient-text">
+
+            Career Potential
+
+        </span>
+
+    </h1>
+
+
+    <p class="header-description">
+
+        Evaluate your core abilities and let our
+        AI-powered career intelligence system
+        identify professional directions that
+        align with your strengths.
+
+    </p>
+
+
+    <!-- Stats -->
+
+    <div class="header-stats">
+
+        <div class="header-stat">
+
+            <strong>06</strong>
+
+            <span>Core Skills</span>
+
+        </div>
+
+
+        <div class="header-stat">
+
+            <strong>0–100</strong>
+
+            <span>Skill Scale</span>
+
+        </div>
+
+
+        <div class="header-stat">
+
+            <strong>AI</strong>
+
+            <span>Career Analysis</span>
+
+        </div>
+
+    </div>
+
+
+    <!-- Progress -->
+
+    <div class="progress-wrapper">
+
+        <div class="progress-info">
+
+            <span>
+
+                <i class="bi bi-activity me-1"></i>
+
+                Profile Completion
+
+            </span>
+
+            <span id="progressText">
+
+                0 / 6 Reviewed
+
+            </span>
+
+        </div>
+
+
+        <div class="progress">
+
+            <div
+                id="progressBar"
+                class="progress-bar"
+                style="width:0%;">
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<div class="container assessment-container">
+
+    <div class="assessment-card fade-up">
+
+
+        <!-- Section Heading -->
+
+        <div class="section-heading">
+
+            <div>
+
+                <h3>
+
+                    <i
+                        class="bi bi-sliders2-vertical text-info me-2">
+                    </i>
+
+                    Evaluate Your Skills
+
+                </h3>
+
+                <p>
+
+                    Move each slider to reflect your current
+                    confidence level.
+
+                </p>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="reset-button"
+                onclick="resetAssessment()">
+
+                <i class="bi bi-arrow-counterclockwise me-1"></i>
+
+                Reset
+
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
+
+        <form
+            action="/predict"
+            method="POST"
+            id="assessmentForm">
+
+
+            <div class="row g-4">
+
+
+                <!-- MATHEMATICS -->
+
+                <div class="col-lg-6">
+
+                    <div class="skill-card">
+
+                        <div class="skill-icon">
+
+                            <i class="bi bi-calculator"></i>
+
+                        </div>
+
+
+                        <div class="skill-title">
+
+                            Mathematics
+
+                        </div>
+
+
+                        <div class="skill-description">
+
+                            Logical reasoning, numerical analysis
+                            and structured problem solving.
+
+                        </div>
+
+
+                        <div class="score-display">
+
+                            <span class="score-label">
+
+                                Skill Score
+
+                            </span>
+
+                            <span
+                                id="mathValue"
+                                class="score-number">
+
+                                70
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            id="mathLevel"
+                            class="level-badge">
+
+                            Strong
+
+                        </span>
+
+
+                        <input
+                            type="range"
+                            class="skill-range"
+                            id="math"
+                            name="math"
+                            min="0"
+                            max="100"
+                            value="70"
+                            oninput="updateSkill('math')">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PROGRAMMING -->
+
+                <div class="col-lg-6">
+
+                    <div class="skill-card">
+
+                        <div class="skill-icon">
+
+                            <i class="bi bi-code-slash"></i>
+
+                        </div>
+
+
+                        <div class="skill-title">
+
+                            Programming
+
+                        </div>
+
+
+                        <div class="skill-description">
+
+                            Coding ability, algorithms,
+                            software development and
+                            computational thinking.
+
+                        </div>
+
+
+                        <div class="score-display">
+
+                            <span class="score-label">
+
+                                Skill Score
+
+                            </span>
+
+                            <span
+                                id="programmingValue"
+                                class="score-number">
+
+                                70
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            id="programmingLevel"
+                            class="level-badge">
+
+                            Strong
+
+                        </span>
+
+
+                        <input
+                            type="range"
+                            class="skill-range"
+                            id="programming"
+                            name="programming"
+                            min="0"
+                            max="100"
+                            value="70"
+                            oninput="updateSkill('programming')">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- COMMUNICATION -->
+
+                <div class="col-lg-6">
+
+                    <div class="skill-card">
+
+                        <div class="skill-icon">
+
+                            <i class="bi bi-chat-dots"></i>
+
+                        </div>
+
+
+                        <div class="skill-title">
+
+                            Communication
+
+                        </div>
+
+
+                        <div class="skill-description">
+
+                            Speaking, collaboration,
+                            presentation and interpersonal
+                            communication.
+
+                        </div>
+
+
+                        <div class="score-display">
+
+                            <span class="score-label">
+
+                                Skill Score
+
+                            </span>
+
+                            <span
+                                id="communicationValue"
+                                class="score-number">
+
+                                70
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            id="communicationLevel"
+                            class="level-badge">
+
+                            Strong
+
+                        </span>
+
+
+                        <input
+                            type="range"
+                            class="skill-range"
+                            id="communication"
+                            name="communication"
+                            min="0"
+                            max="100"
+                            value="70"
+                            oninput="updateSkill('communication')">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CREATIVITY -->
+
+                <div class="col-lg-6">
+
+                    <div class="skill-card">
+
+                        <div class="skill-icon">
+
+                            <i class="bi bi-lightbulb"></i>
+
+                        </div>
+
+
+                        <div class="skill-title">
+
+                            Creativity
+
+                        </div>
+
+
+                        <div class="skill-description">
+
+                            Innovation, original thinking,
+                            design sense and idea generation.
+
+                        </div>
+
+
+                        <div class="score-display">
+
+                            <span class="score-label">
+
+                                Skill Score
+
+                            </span>
+
+                            <span
+                                id="creativityValue"
+                                class="score-number">
+
+                                70
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            id="creativityLevel"
+                            class="level-badge">
+
+                            Strong
+
+                        </span>
+
+
+                        <input
+                            type="range"
+                            class="skill-range"
+                            id="creativity"
+                            name="creativity"
+                            min="0"
+                            max="100"
+                            value="70"
+                            oninput="updateSkill('creativity')">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- ANALYTICAL -->
+
+                <div class="col-lg-6">
+
+                    <div class="skill-card">
+
+                        <div class="skill-icon">
+
+                            <i class="bi bi-bar-chart-line"></i>
+
+                        </div>
+
+
+                        <div class="skill-title">
+
+                            Analytical Thinking
+
+                        </div>
+
+
+                        <div class="skill-description">
+
+                            Data interpretation, critical
+                            thinking and decision making.
+
+                        </div>
+
+
+                        <div class="score-display">
+
+                            <span class="score-label">
+
+                                Skill Score
+
+                            </span>
+
+                            <span
+                                id="analyticalValue"
+                                class="score-number">
+
+                                70
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            id="analyticalLevel"
+                            class="level-badge">
+
+                            Strong
+
+                        </span>
+
+
+                        <input
+                            type="range"
+                            class="skill-range"
+                            id="analytical"
+                            name="analytical"
+                            min="0"
+                            max="100"
+                            value="70"
+                            oninput="updateSkill('analytical')">
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- LEADERSHIP -->
+
+                <div class="col-lg-6">
+
+                    <div class="skill-card">
+
+                        <div class="skill-icon">
+
+                            <i class="bi bi-people"></i>
+
+                        </div>
+
+
+                        <div class="skill-title">
+
+                            Leadership
+
+                        </div>
+
+
+                        <div class="skill-description">
+
+                            Team coordination, responsibility,
+                            ownership and decision making.
+
+                        </div>
+
+
+                        <div class="score-display">
+
+                            <span class="score-label">
+
+                                Skill Score
+
+                            </span>
+
+                            <span
+                                id="leadershipValue"
+                                class="score-number">
+
+                                70
+
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            id="leadershipLevel"
+                            class="level-badge">
+
+                            Strong
+
+                        </span>
+
+
+                        <input
+                            type="range"
+                            class="skill-range"
+                            id="leadership"
+                            name="leadership"
+                            min="0"
+                            max="100"
+                            value="70"
+                            oninput="updateSkill('leadership')">
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LIVE PROFILE
+            ================================================== -->
+
+            <div class="profile-panel">
+
+                <div class="row g-4 align-items-center">
+
+                    <div class="col-lg-6">
+
+                        <div class="profile-title">
+
+                            <i class="bi bi-graph-up-arrow text-info me-2"></i>
+
+                            Live Career Profile
+
+                        </div>
+
+                        <div class="profile-subtitle mt-1">
+
+                            Your profile updates as you adjust
+                            your skill ratings.
+
+                        </div>
+
+
+                        <div class="row g-3 mt-3">
+
+                            <div class="col-4">
+
+                                <div class="profile-stat">
+
+                                    <div
+                                        id="overallScore"
+                                        class="value">
+
+                                        70
+
+                                    </div>
+
+                                    <div class="label">
+
+                                        Overall
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-4">
+
+                                <div class="profile-stat">
+
+                                    <div
+                                        id="strongestScore"
+                                        class="value">
+
+                                        70
+
+                                    </div>
+
+                                    <div class="label">
+
+                                        Strongest
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="col-4">
+
+                                <div class="profile-stat">
+
+                                    <div
+                                        id="focusScore"
+                                        class="value">
+
+                                        70
+
+                                    </div>
+
+                                    <div class="label">
+
+                                        Focus
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="ai-info">
+
+                            <div class="d-flex gap-3">
+
+                                <div class="ai-info-icon">
+
+                                    <i class="bi bi-stars"></i>
+
+                                </div>
+
+
+                                <div>
+
+                                    <div class="ai-info-title">
+
+                                        AI Profile Insight
+
+                                    </div>
+
+                                    <div
+                                        id="aiInsight"
+                                        class="ai-info-text">
+
+                                        Your current profile shows
+                                        a balanced combination of
+                                        technical and professional
+                                        abilities.
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RADAR -->
+
+                    <div class="col-lg-6">
+
+                        <div class="chart-box">
+
+                            <canvas
+                                id="skillsChart">
+                            </canvas>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 HOW AI WORKS
+            ================================================== -->
+
+            <div class="feature-strip">
+
+                <div class="feature-mini">
+
+                    <i class="bi bi-cpu"></i>
+
+                    <h6>
+
+                        AI Analysis
+
+                    </h6>
+
+                    <p>
+
+                        Your skill profile is processed
+                        by the career prediction model.
+
+                    </p>
+
+                </div>
+
+
+                <div class="feature-mini">
+
+                    <i class="bi bi-bullseye"></i>
+
+                    <h6>
+
+                        Career Matching
+
+                    </h6>
+
+                    <p>
+
+                        The system compares your abilities
+                        against learned career patterns.
+
+                    </p>
+
+                </div>
+
+
+                <div class="feature-mini">
+
+                    <i class="bi bi-signpost-split"></i>
+
+                    <h6>
+
+                        Career Roadmap
+
+                    </h6>
+
+                    <p>
+
+                        Receive a recommended direction
+                        and a structured learning path.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SUBMIT
+            ================================================== -->
+
+            <div class="submit-section">
+
+                <button
+                    type="submit"
+                    class="analyze-button"
+                    id="analyzeButton">
+
+                    <i class="bi bi-stars me-2"></i>
+
+                    Analyze My Career Profile
+
+                </button>
+
+
+                <div class="security-text">
+
+                    <i class="bi bi-shield-check me-1"></i>
+
+                    Your assessment is processed by the
+                    CareerAI prediction system.
+
+                </div>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+const skills = [
+
+    "math",
+    "programming",
+    "communication",
+    "creativity",
+    "analytical",
+    "leadership"
+
+];
+
+
+const skillNames = {
+
+    math: "Mathematics",
+
+    programming: "Programming",
+
+    communication: "Communication",
+
+    creativity: "Creativity",
+
+    analytical: "Analytical Thinking",
+
+    leadership: "Leadership"
+
+};
+
+
+/* =====================================================
+   GET LEVEL
+===================================================== */
+
+function getLevel(value) {
+
+    value = parseInt(value);
+
+    if (value < 30) {
+
+        return "Beginner";
+
+    }
+
+    if (value < 50) {
+
+        return "Developing";
+
+    }
+
+    if (value < 75) {
+
+        return "Strong";
+
+    }
+
+    return "Expert";
+
+}
+
+
+/* =====================================================
+   UPDATE SKILL
+===================================================== */
+
+function updateSkill(skill) {
+
+    const slider =
+        document.getElementById(skill);
+
+    const value =
+        parseInt(slider.value);
+
+
+    const display =
+        document.getElementById(
+            skill + "Value"
+        );
+
+
+    const level =
+        document.getElementById(
+            skill + "Level"
+        );
+
+
+    display.textContent = value;
+
+    level.textContent =
+        getLevel(value);
+
+
+    /* Slider */
+
+    slider.style.background =
+        `linear-gradient(
+            90deg,
+            #00e5ff 0%,
+            #7c3aed ${value}%,
+            rgba(255,255,255,0.10) ${value}%,
+            rgba(255,255,255,0.10) 100%
+        )`;
+
+
+    updateProfile();
+
+    updateChart();
+
+    updateProgress();
+
+}
+
+
+/* =====================================================
+   PROFILE CALCULATION
+===================================================== */
+
+function getValues() {
+
+    return skills.map(function(skill) {
+
+        return parseInt(
+            document.getElementById(skill).value
+        );
+
+    });
+
+}
+
+
+function updateProfile() {
+
+    const values =
+        getValues();
+
+
+    const total =
+        values.reduce(
+            (sum, value) =>
+                sum + value,
+            0
+        );
+
+
+    const average =
+        Math.round(
+            total / values.length
+        );
+
+
+    const highest =
+        Math.max(...values);
+
+
+    const lowest =
+        Math.min(...values);
+
+
+    document.getElementById(
+        "overallScore"
+    ).textContent =
+        average;
+
+
+    document.getElementById(
+        "strongestScore"
+    ).textContent =
+        highest;
+
+
+    document.getElementById(
+        "focusScore"
+    ).textContent =
+        lowest;
+
+
+    const strongestIndex =
+        values.indexOf(highest);
+
+
+    const weakestIndex =
+        values.indexOf(lowest);
+
+
+    const strongestSkill =
+        skillNames[
+            skills[strongestIndex]
+        ];
+
+
+    const weakestSkill =
+        skillNames[
+            skills[weakestIndex]
+        ];
+
+
+    let insight;
+
+
+    if (average >= 80) {
+
+        insight =
+            "Your profile shows very strong overall capability. You have a solid foundation for competitive career paths and advanced skill development.";
+
+    }
+
+    else if (average >= 65) {
+
+        insight =
+            `${strongestSkill} is currently your strongest area. Continue developing ${weakestSkill} to create a more balanced professional profile.`;
+
+    }
+
+    else if (average >= 45) {
+
+        insight =
+            `Your profile is developing. Focus on strengthening ${weakestSkill} while building deeper expertise in ${strongestSkill}.`;
+
+    }
+
+    else {
+
+        insight =
+            "Your profile is at an early development stage. Focus on building fundamentals consistently across the six skill areas.";
+
+    }
+
+
+    document.getElementById(
+        "aiInsight"
+    ).textContent =
+        insight;
+
+}
+
+
+/* =====================================================
+   PROGRESS
+===================================================== */
+
+function updateProgress() {
+
+    let reviewed = 0;
+
+
+    skills.forEach(function(skill) {
+
+        const slider =
+            document.getElementById(skill);
+
+
+        if (
+            parseInt(slider.value) !== 70
+        ) {
+
+            reviewed++;
+
+        }
+
+    });
+
+
+    const percentage =
+        (reviewed /
+            skills.length) *
+        100;
+
+
+    document.getElementById(
+        "progressBar"
+    ).style.width =
+        percentage + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        reviewed +
+        " / 6 Reviewed";
+
+}
+
+
+/* =====================================================
+   RADAR CHART
+===================================================== */
+
+const ctx =
+    document
+        .getElementById(
+            "skillsChart"
+        )
+        .getContext("2d");
+
+
+const skillsChart =
+    new Chart(
+        ctx,
+        {
+
+            type: "radar",
+
+            data: {
+
+                labels: [
+
+                    "Mathematics",
+                    "Programming",
+                    "Communication",
+                    "Creativity",
+                    "Analytical",
+                    "Leadership"
+
+                ],
+
+                datasets: [
+
+                    {
+
+                        label:
+                            "Skill Profile",
+
+                        data:
+                            [70,70,70,70,70,70],
+
+                        borderColor:
+                            "#00e5ff",
+
+                        backgroundColor:
+                            "rgba(0,229,255,0.10)",
+
+                        pointBackgroundColor:
+                            "#ffffff",
+
+                        pointBorderColor:
+                            "#00e5ff",
+
+                        pointRadius: 4,
+
+                        borderWidth: 2
+
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                scales: {
+
+                    r: {
+
+                        min: 0,
+
+                        max: 100,
+
+                        ticks: {
+
+                            display: false,
+
+                            stepSize: 20
+
+                        },
+
+                        grid: {
+
+                            color:
+                                "rgba(255,255,255,0.08)"
+
+                        },
+
+                        angleLines: {
+
+                            color:
+                                "rgba(255,255,255,0.08)"
+
+                        },
+
+                        pointLabels: {
+
+                            color:
+                                "#9aa7bc",
+
+                            font: {
+
+                                size: 11
+
+                            }
+
+                        }
+
+                    }
+
+                },
+
+                plugins: {
+
+                    legend: {
+
+                        display: false
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    );
+
+
+/* =====================================================
+   UPDATE CHART
+===================================================== */
+
+function updateChart() {
+
+    skillsChart.data.datasets[0].data =
+        getValues();
+
+    skillsChart.update();
+
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+function resetAssessment() {
+
+    skills.forEach(function(skill) {
+
+        document.getElementById(
+            skill
+        ).value = 70;
+
+        updateSkill(skill);
+
+    });
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+skills.forEach(function(skill) {
+
+    updateSkill(skill);
+
+});
+
+
+/* =====================================================
+   FORM SUBMIT
+===================================================== */
+
+document
+    .getElementById("assessmentForm")
+    .addEventListener(
+        "submit",
+        function() {
+
+            const button =
+                document.getElementById(
+                    "analyzeButton"
+                );
+
+
+            button.innerHTML = `
+
+                <span
+                    class="spinner-border
+                           spinner-border-sm
+                           me-2">
+                </span>
+
+                AI is analyzing your profile...
+
+            `;
+
+
+            button.disabled = true;
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

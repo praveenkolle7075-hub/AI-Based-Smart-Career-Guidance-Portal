@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Career Analysis | AI-Based Smart Career Guidance Portal</title>
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+
+    <style>
+
+        * {
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(0,229,255,0.08),
+                    transparent 28%
+                ),
+                radial-gradient(
+                    circle at 90% 15%,
+                    rgba(124,58,237,0.12),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 50% 80%,
+                    rgba(37,99,235,0.07),
+                    transparent 35%
+                ),
+                #050914;
+
+            color: #ffffff;
+
+            overflow-x: hidden;
+
+        }
+
+
+        /* =========================================
+           NAVBAR
+        ========================================= */
+
+        .top-navbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(5,9,20,0.88);
+
+            backdrop-filter: blur(18px);
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .brand {
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+        }
+
+
+        .brand i {
+
+            color: #00e5ff;
+
+            margin-right: 8px;
+
+        }
+
+
+        .nav-link-custom {
+
+            color: #9aa7bc;
+
+            text-decoration: none;
+
+            margin-left: 25px;
+
+            font-size: 14px;
+
+            transition: .3s;
+
+        }
+
+
+        .nav-link-custom:hover {
+
+            color: #00e5ff;
+
+        }
+
+
+        /* =========================================
+           HERO
+        ========================================= */
+
+        .analysis-header {
+
+            text-align: center;
+
+            padding:
+                70px 20px 35px;
+
+        }
+
+
+        .ai-badge {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding:
+                9px 18px;
+
+            border-radius: 50px;
+
+            background:
+                rgba(0,229,255,0.07);
+
+            border:
+                1px solid rgba(0,229,255,0.20);
+
+            color: #00e5ff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+        }
+
+
+        .analysis-title {
+
+            font-size:
+                clamp(42px, 5vw, 68px);
+
+            font-weight: 800;
+
+            letter-spacing: -2.5px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .gradient-text {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #ffffff,
+                    #00e5ff,
+                    #8b5cf6
+                );
+
+            -webkit-background-clip: text;
+
+            -webkit-text-fill-color: transparent;
+
+            background-clip: text;
+
+        }
+
+
+        .analysis-description {
+
+            max-width: 720px;
+
+            margin:
+                18px auto;
+
+            color: #8c99ad;
+
+            line-height: 1.8;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =========================================
+           MAIN CONTAINER
+        ========================================= */
+
+        .analysis-container {
+
+            max-width: 1180px;
+
+            margin:
+                20px auto 80px;
+
+        }
+
+
+        /* =========================================
+           MAIN CAREER CARD
+        ========================================= */
+
+        .main-career-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            border-radius: 28px;
+
+            padding:
+                45px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,229,255,0.08),
+                    rgba(124,58,237,0.08),
+                    rgba(255,255,255,0.025)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.10);
+
+            box-shadow:
+                0 30px 80px
+                rgba(0,0,0,0.35);
+
+        }
+
+
+        .main-career-card::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            background:
+                rgba(0,229,255,0.08);
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            top: -150px;
+
+            right: -100px;
+
+        }
+
+
+        .main-career-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 250px;
+
+            height: 250px;
+
+            background:
+                rgba(124,58,237,0.08);
+
+            border-radius: 50%;
+
+            filter: blur(80px);
+
+            bottom: -150px;
+
+            left: -100px;
+
+        }
+
+
+        .career-content {
+
+            position: relative;
+
+            z-index: 2;
+
+        }
+
+
+        .match-label {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                7px 13px;
+
+            border-radius: 30px;
+
+            background:
+                rgba(34,197,94,0.10);
+
+            border:
+                1px solid rgba(34,197,94,0.20);
+
+            color: #4ade80;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+        }
+
+
+        .career-title {
+
+            font-size:
+                clamp(35px, 4vw, 55px);
+
+            font-weight: 800;
+
+            margin-top: 20px;
+
+            margin-bottom: 8px;
+
+            letter-spacing: -1.5px;
+
+        }
+
+
+        .career-category {
+
+            color: #00e5ff;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+        }
+
+
+        .career-description {
+
+            color: #91a0b5;
+
+            font-size: 15px;
+
+            line-height: 1.8;
+
+            max-width: 650px;
+
+            margin-top: 20px;
+
+        }
+
+
+        /* =========================================
+           AI ICON
+        ========================================= */
+
+        .ai-orb {
+
+            width: 190px;
+
+            height: 190px;
+
+            margin: auto;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            position: relative;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(0,229,255,0.18),
+                    rgba(124,58,237,0.08),
+                    transparent 70%
+                );
+
+            border:
+                1px solid rgba(0,229,255,0.25);
+
+            box-shadow:
+                0 0 70px
+                rgba(0,229,255,0.15);
+
+            animation:
+                orbPulse 3s ease-in-out infinite;
+
+        }
+
+
+        .ai-orb i {
+
+            font-size: 65px;
+
+            color: #00e5ff;
+
+            text-shadow:
+                0 0 30px
+                rgba(0,229,255,0.7);
+
+        }
+
+
+        @keyframes orbPulse {
+
+            0%,100% {
+
+                transform: scale(1);
+
+            }
+
+            50% {
+
+                transform: scale(1.05);
+
+            }
+
+        }
+
+
+        .ai-direction {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+        }
+
+
+        .ai-direction h5 {
+
+            font-weight: 700;
+
+        }
+
+
+        .ai-direction p {
+
+            color: #78869a;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================================
+           BUTTONS
+        ========================================= */
+
+        .btn-ai {
+
+            border: none;
+
+            padding:
+                13px 22px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            font-weight: 600;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #7c3aed
+                );
+
+            box-shadow:
+                0 10px 30px
+                rgba(37,99,235,0.25);
+
+            transition: .3s;
+
+        }
+
+
+        .btn-ai:hover {
+
+            transform:
+                translateY(-3px);
+
+            color: white;
+
+            box-shadow:
+                0 15px 40px
+                rgba(37,99,235,0.40);
+
+        }
+
+
+        .btn-outline-ai {
+
+            padding:
+                12px 20px;
+
+            border-radius: 10px;
+
+            border:
+                1px solid rgba(255,255,255,0.12);
+
+            color: #dbe4f0;
+
+            background:
+                rgba(255,255,255,0.03);
+
+            text-decoration: none;
+
+            font-weight: 600;
+
+            transition: .3s;
+
+        }
+
+
+        .btn-outline-ai:hover {
+
+            color: white;
+
+            border-color:
+                rgba(0,229,255,0.35);
+
+            background:
+                rgba(0,229,255,0.06);
+
+        }
+
+
+        /* =========================================
+           STAT CARDS
+        ========================================= */
+
+        .stat-card {
+
+            height: 100%;
+
+            padding: 25px;
+
+            border-radius: 18px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+            transition: .3s;
+
+        }
+
+
+        .stat-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            border-color:
+                rgba(0,229,255,0.25);
+
+        }
+
+
+        .stat-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            border-radius: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(0,229,255,0.08);
+
+            color: #00e5ff;
+
+            font-size: 20px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .stat-value {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+        }
+
+
+        .stat-title {
+
+            color: #8290a4;
+
+            font-size: 13px;
+
+            margin-top: 4px;
+
+        }
+
+
+        /* =========================================
+           SECTION CARD
+        ========================================= */
+
+        .section-card {
+
+            margin-top: 25px;
+
+            padding: 30px;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid rgba(255,255,255,0.08);
+
+        }
+
+
+        .section-heading {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .section-heading h3 {
+
+            font-size: 22px;
+
+            font-weight: 700;
+
+            margin: 0;
+
+        }
+
+
+        .section-heading p {
+
+            color: #77859a;
+
+            font-size: 13px;
+
+            margin: 5px 0 0;
+
+        }
+
+
+        .section-heading i {
+
+            color: #00e5ff;
+
+            margin-right: 8px;
+
+        }
+
+
+        /* =========================================
+           RECOMMENDATIONS
+        ========================================= */
+
+        .recommendation {
+
+            padding:
+                17px 18px;
+
+            margin-bottom: 12px;
+
+            border-radius: 13px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid rgba(255,255,255,0.06);
+
+        }
+
+
+        .recommendation:last-child {
+
+            margin-bottom: 0;
+
+        }
+
+
+        .rank {
+
+            width: 32px;
+
+            height: 32px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(0,229,255,0.08);
+
+            color: #00e5ff;
+
+            font-weight: 700;
+
+            font-size: 13px;
+
+        }
+
+
+        .recommendation-name {
+
+            font-weight: 600;
+
+        }
+
+
+        .percentage {
+
+            color: #00e5ff;
+
+            font-weight: 700;
+
+        }
+
+
+        .match-progress {
+
+            height: 5px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border-radius: 20px;
+
+            margin-top: 10px;
+
+        }
+
+
+        .match-progress-bar {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00e5ff,
+                    #7c3aed
+                );
+
+        }
+
+
+        /* =========================================
+           SKILL BARS
+        ========================================= */
+
+        .skill-row {
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .skill-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 8px;
+
+            font-size: 13px;
+
+        }
+
+
+        .skill-score {
+
+            color: #00e5ff;
+
+            font-weight: 600;
+
+        }
+
+
+        .skill-bar {
+
+            height: 7px;
+
+            background:
+                rgba(255,255,255,0.07);
+
+            border-radius: 20px;
+
+        }
+
+
+        .skill-fill {
+
+            height: 100%;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #00e5ff,
+                    #7c3aed
+                );
+
+        }
+
+
+        /* =========================================
+           SKILL DEVELOPMENT
+        ========================================= */
+
+        .development-item {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                15px 0;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.06);
+
+        }
+
+
+        .development-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .development-skill {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+
+        .check-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                rgba(0,229,255,0.07);
+
+            color: #00e5ff;
+
+        }
+
+
+        .gap-badge {
+
+            padding:
+                5px 9px;
+
+            border-radius: 20px;
+
+            background:
+                rgba(124,58,237,0.12);
+
+            color: #a78bfa;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+        }
+
+
+        /* =========================================
+           LEARNING SKILLS
+        ========================================= */
+
+        .learning-card {
+
+            padding: 18px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            height: 100%;
+
+            transition: .3s;
+
+        }
+
+
+        .learning-card:hover {
+
+            border-color:
+                rgba(0,229,255,0.25);
+
+            transform:
+                translateY(-3px);
+
+        }
+
+
+        .learning-icon {
+
+            color: #00e5ff;
+
+            font-size: 20px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .learning-card h6 {
+
+            font-weight: 600;
+
+        }
+
+
+        .learning-card p {
+
+            color: #748196;
+
+            font-size: 12px;
+
+            margin: 0;
+
+        }
+
+
+        /* =========================================
+           PROJECTS
+        ========================================= */
+
+        .project-card {
+
+            height: 100%;
+
+            padding: 22px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,0.025);
+
+            border:
+                1px solid rgba(255,255,255,0.07);
+
+            transition: .3s;
+
+        }
+
+
+        .project-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(124,58,237,0.35);
+
+        }
+
+
+        .project-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 12px;
+
+            background:
+                rgba(124,58,237,0.10);
+
+            color: #a78bfa;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .project-card h5 {
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+        }
+
+
+        .project-card p {
+
+            color: #77859a;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+        }
+
+
+        /* =========================================
+           MOTIVATION
+        ========================================= */
+
+        .motivation-card {
+
+            margin-top: 25px;
+
+            padding:
+                40px;
+
+            text-align: center;
+
+            border-radius: 24px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(0,229,255,0.07),
+                    rgba(124,58,237,0.08)
+                );
+
+            border:
+                1px solid rgba(255,255,255,0.09);
+
+        }
+
+
+        .motivation-icon {
+
+            width: 60px;
+
+            height: 60px;
+
+            margin: auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 16px;
+
+            background:
+                rgba(0,229,255,0.08);
+
+            color: #00e5ff;
+
+            font-size: 25px;
+
+        }
+
+
+        .motivation-card h2 {
+
+            margin-top: 20px;
+
+            font-weight: 800;
+
+        }
+
+
+        .motivation-card p {
+
+            max-width: 700px;
+
+            margin:
+                15px auto;
+
+            color: #8390a4;
+
+            line-height: 1.8;
+
+        }
+
+
+        /* =========================================
+           FOOTER
+        ========================================= */
+
+        footer {
+
+            max-width: 1180px;
+
+            margin:
+                0 auto;
+
+            padding:
+                30px 20px 50px;
+
+            color: #68758a;
+
+            text-align: center;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =========================================
+           MOBILE
+        ========================================= */
+
+        @media (max-width: 768px) {
+
+            .nav-link-custom {
+
+                display: none;
+
+            }
+
+            .main-career-card {
+
+                padding: 28px;
+
+            }
+
+            .analysis-header {
+
+                padding-top: 50px;
+
+            }
+
+            .section-card {
+
+                padding: 22px;
+
+            }
+
+            .career-title {
+
+                font-size: 36px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="top-navbar">
+
+    <div class="container">
+
+        <div
+            class="d-flex
+                   justify-content-between
+                   align-items-center
+                   py-3">
+
+            <a
+                href="/"
+                class="brand">
+
+                <i class="bi bi-stars"></i>
+
+                CareerAI
+
+            </a>
+
+
+            <div>
+
+                <a
+                    href="/"
+                    class="nav-link-custom">
+
+                    Home
+
+                </a>
+
+                <a
+                    href="/careers"
+                    class="nav-link-custom">
+
+                    Careers
+
+                </a>
+
+                <a
+                    href="/roadmap"
+                    class="nav-link-custom">
+
+                    Roadmap
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<section class="analysis-header">
+
+    <div class="ai-badge">
+
+        <i class="bi bi-cpu"></i>
+
+        AI CAREER INTELLIGENCE
+
+    </div>
+
+
+    <h1 class="analysis-title">
+
+        Your
+
+        <span class="gradient-text">
+
+            Career Analysis
+
+        </span>
+
+    </h1>
+
+
+    <p class="analysis-description">
+
+        Our AI-powered career intelligence system
+        analyzed your skills, abilities and interests
+        to identify career directions that best match
+        your profile.
+
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<div class="container analysis-container">
+
+
+{% if error %}
+
+
+    <!-- ERROR -->
+
+    <div class="section-card text-center">
+
+        <div class="stat-icon mx-auto">
+
+            <i class="bi bi-exclamation-triangle"></i>
+
+        </div>
+
+        <h3>
+
+            Analysis Could Not Be Completed
+
+        </h3>
+
+        <p class="text-secondary">
+
+            {{ error }}
+
+        </p>
+
+        <a
+            href="/assessment"
+            class="btn-ai d-inline-block mt-3">
+
+            <i class="bi bi-arrow-left me-2"></i>
+
+            Return to Assessment
+
+        </a>
+
+    </div>
+
+
+{% else %}
+
+
+    <!-- =================================================
+         MAIN CAREER RESULT
+    ================================================== -->
+
+    <div class="main-career-card">
+
+        <div class="career-content">
+
+            <div class="row align-items-center">
+
+
+                <!-- LEFT -->
+
+                <div class="col-lg-8">
+
+                    <div class="match-label">
+
+                        <i class="bi bi-check-circle-fill"></i>
+
+                        TOP AI CAREER MATCH
+
+                    </div>
+
+
+                    <h2 class="career-title">
+
+                        {{ career }}
+
+                    </h2>
+
+
+                    <div class="career-category">
+
+                        {{ details.category }}
+
+                    </div>
+
+
+                    <p class="career-description">
+
+                        {{ details.description }}
+
+                    </p>
+
+
+                    <div
+                        class="d-flex
+                               flex-wrap
+                               gap-3
+                               mt-4">
+
+                        <a
+                            href="/roadmap?career={{ career }}"
+                            class="btn-ai">
+
+                            <i class="bi bi-signpost-split me-2"></i>
+
+                            View Career Roadmap
+
+                        </a>
+
+
+                        <a
+                            href="/assessment"
+                            class="btn-outline-ai">
+
+                            <i class="bi bi-arrow-repeat me-2"></i>
+
+                            Retake Assessment
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RIGHT -->
+
+                <div class="col-lg-4 mt-5 mt-lg-0">
+
+                    <div class="ai-orb">
+
+                        <i class="bi bi-stars"></i>
+
+                    </div>
+
+
+                    <div class="ai-direction">
+
+                        <h5>
+
+                            AI Recommended Direction
+
+                        </h5>
+
+                        <p>
+
+                            Based on your assessment profile
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         STATISTICS
+    ================================================== -->
+
+    <div class="row g-4 mt-2">
+
+
+        <!-- MATCH -->
+
+        <div class="col-md-4">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-bullseye"></i>
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    {% if recommendations %}
+
+                        {{ recommendations[0].score }}%
+
+                    {% else %}
+
+                        --
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    AI Career Match
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- OPTIONS -->
+
+        <div class="col-md-4">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-grid-3x3-gap"></i>
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    30+
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Career Directions
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SKILLS -->
+
+        <div class="col-md-4">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+
+                    <i class="bi bi-bar-chart"></i>
+
+                </div>
+
+
+                <div class="stat-value">
+
+                    6
+
+                </div>
+
+
+                <div class="stat-title">
+
+                    Core Skills Analyzed
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         TOP CAREER MATCHES
+    ================================================== -->
+
+    <div class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h3>
+
+                    <i class="bi bi-trophy"></i>
+
+                    Top Career Matches
+
+                </h3>
+
+                <p>
+
+                    Career directions ranked by the
+                    AI prediction model.
+
+                </p>
+
+            </div>
+
+
+            <span class="ai-badge">
+
+                TOP 5
+
+            </span>
+
+        </div>
+
+
+
+        {% for item in recommendations %}
+
+        <div class="recommendation">
+
+
+            <div
+                class="d-flex
+                       align-items-center
+                       gap-3">
+
+                <div class="rank">
+
+                    #{{ loop.index }}
+
+                </div>
+
+
+                <div class="flex-grow-1">
+
+                    <div
+                        class="d-flex
+                               justify-content-between
+                               align-items-center">
+
+                        <span class="recommendation-name">
+
+                            {{ item.career }}
+
+                        </span>
+
+
+                        <span class="percentage">
+
+                            {{ item.score }}%
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="match-progress">
+
+                        <div
+                            class="match-progress-bar"
+                            style="width: {{ item.score }}%;">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+
+    <!-- =================================================
+         STRENGTH + DEVELOPMENT
+    ================================================== -->
+
+    <div class="row g-4 mt-1">
+
+
+        <!-- STRENGTHS -->
+
+        <div class="col-lg-6">
+
+            <div class="section-card h-100">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h3>
+
+                            <i class="bi bi-lightning-charge"></i>
+
+                            Your Strengths
+
+                        </h3>
+
+                        <p>
+
+                            Strongest areas identified
+                            from your assessment.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% for item in strengths %}
+
+                <div class="skill-row">
+
+                    <div class="skill-top">
+
+                        <span>
+
+                            {{ item[0].replace("_", " ").title() }}
+
+                        </span>
+
+                        <span class="skill-score">
+
+                            {{ item[1] }}%
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="skill-bar">
+
+                        <div
+                            class="skill-fill"
+                            style="width: {{ item[1] }}%;">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+
+        <!-- DEVELOPMENT -->
+
+        <div class="col-lg-6">
+
+            <div class="section-card h-100">
+
+                <div class="section-heading">
+
+                    <div>
+
+                        <h3>
+
+                            <i class="bi bi-graph-up-arrow"></i>
+
+                            Skill Development
+
+                        </h3>
+
+                        <p>
+
+                            Areas you can improve to
+                            strengthen your career profile.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                {% if gaps %}
+
+
+                    {% for item in gaps %}
+
+                    <div class="development-item">
+
+                        <div class="development-skill">
+
+                            <div class="check-icon">
+
+                                <i class="bi bi-arrow-up"></i>
+
+                            </div>
+
+                            <span>
+
+                                {{ item.skill }}
+
+                            </span>
+
+                        </div>
+
+
+                        <span class="gap-badge">
+
+                            +{{ item.gap }}
+
+                        </span>
+
+                    </div>
+
+                    {% endfor %}
+
+
+                {% else %}
+
+                    <div class="text-success">
+
+                        <i class="bi bi-check-circle me-2"></i>
+
+                        Your profile is strongly aligned
+                        with this career direction.
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         SKILLS TO LEARN
+    ================================================== -->
+
+    <div class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h3>
+
+                    <i class="bi bi-mortarboard"></i>
+
+                    Skills To Develop
+
+                </h3>
+
+                <p>
+
+                    Recommended skills for becoming
+                    a strong {{ career }} professional.
+
+                </p>
+
+            </div>
+
+
+            <span class="ai-badge">
+
+                AI LEARNING PATH
+
+            </span>
+
+        </div>
+
+
+        <div class="row g-3">
+
+
+            {% for skill in details.skills %}
+
+            <div class="col-md-4">
+
+                <div class="learning-card">
+
+                    <div class="learning-icon">
+
+                        <i class="bi bi-check2-circle"></i>
+
+                    </div>
+
+                    <h6>
+
+                        {{ skill }}
+
+                    </h6>
+
+                    <p>
+
+                        Build practical knowledge
+                        through structured learning
+                        and projects.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         PROJECT RECOMMENDATIONS
+    ================================================== -->
+
+    <div class="section-card">
+
+        <div class="section-heading">
+
+            <div>
+
+                <h3>
+
+                    <i class="bi bi-code-square"></i>
+
+                    Recommended Projects
+
+                </h3>
+
+                <p>
+
+                    Practical projects to strengthen
+                    your portfolio.
+
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            {% for project in details.projects %}
+
+            <div class="col-md-4">
+
+                <div class="project-card">
+
+                    <div class="project-icon">
+
+                        <i class="bi bi-terminal"></i>
+
+                    </div>
+
+
+                    <h5>
+
+                        {{ project }}
+
+                    </h5>
+
+
+                    <p>
+
+                        Build this project to gain
+                        practical experience and create
+                        a stronger career portfolio.
+
+                    </p>
+
+
+                    <a
+                        href="/roadmap?career={{ career }}"
+                        class="text-info text-decoration-none">
+
+                        Add to Roadmap
+
+                        <i class="bi bi-arrow-right ms-1"></i>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         ROADMAP CTA
+    ================================================== -->
+
+    <div class="main-career-card mt-4">
+
+        <div class="career-content">
+
+            <div class="row align-items-center">
+
+
+                <div class="col-lg-8">
+
+                    <div class="match-label">
+
+                        <i class="bi bi-rocket-takeoff"></i>
+
+                        PERSONALIZED CAREER ROADMAP
+
+                    </div>
+
+
+                    <h2
+                        class="mt-3"
+                        style="font-weight:800;">
+
+                        Build Your Future as a
+
+                        <span class="gradient-text">
+
+                            {{ career }}
+
+                        </span>
+
+                    </h2>
+
+
+                    <p class="career-description">
+
+                        Follow a structured learning path
+                        covering skills, projects,
+                        practical experience and
+                        career preparation.
+
+                    </p>
+
+
+                    <a
+                        href="/roadmap?career={{ career }}"
+                        class="btn-ai mt-2 d-inline-block">
+
+                        <i class="bi bi-rocket-takeoff me-2"></i>
+
+                        Start My Career Roadmap
+
+                    </a>
+
+                </div>
+
+
+                <div class="col-lg-4 text-center mt-4 mt-lg-0">
+
+                    <div class="ai-orb"
+                         style="
+                         width:140px;
+                         height:140px;
+                         ">
+
+                        <i
+                            class="bi bi-rocket-takeoff"
+                            style="font-size:45px;">
+
+                        </i>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================================
+         MOTIVATION
+    ================================================== -->
+
+    <div class="motivation-card">
+
+        <div class="motivation-icon">
+
+            <i class="bi bi-fire"></i>
+
+        </div>
+
+
+        <h2>
+
+            Keep Building Your Future
+
+        </h2>
+
+
+        <p>
+
+            {{ motivation }}
+
+        </p>
+
+
+        <div
+            class="d-flex
+                   justify-content-center
+                   flex-wrap
+                   gap-3
+                   mt-4">
+
+            <a
+                href="/roadmap?career={{ career }}"
+                class="btn-ai">
+
+                <i class="bi bi-arrow-right-circle me-2"></i>
+
+                Continue My Journey
+
+            </a>
+
+
+            <a
+                href="/assessment"
+                class="btn-outline-ai">
+
+                <i class="bi bi-arrow-repeat me-2"></i>
+
+                Take Assessment Again
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+{% endif %}
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div>
+
+        <i
+            class="bi bi-stars"
+            style="color:#00e5ff;">
+
+        </i>
+
+        <strong style="color:white;">
+
+            CareerAI
+
+        </strong>
+
+    </div>
+
+
+    <div class="mt-2">
+
+        AI-Based Smart Career Guidance Portal
+
+    </div>
+
+
+    <div class="mt-2">
+
+        Discover • Learn • Build • Grow
+
+    </div>
+
+</footer>
+
+
+
+<script
+    src="{{ url_for('static', filename='js/script.js') }}">
+</script>
+
+
+</body>
+
+</html>
